@@ -78,7 +78,7 @@ pip install litserve
 [Example 2](#agent-example): Minimal agent to fetch the news (with OpenAI API).    
 ([Advanced examples](#featured-examples)):    
 
-### Inference engine example   
+### Inference engine example
 
 ```python
 import litserve as ls
@@ -86,12 +86,12 @@ import litserve as ls
 # define the api to include any number of models, dbs, etc...
 class InferenceEngine(ls.LitAPI):
     def setup(self, device):
+        # device is resolved by LitServe (e.g. "cuda", "cuda:0", or "cpu")
         self.text_model = lambda x: x**2
         self.vision_model = lambda x: x**3
 
     def predict(self, request):
-        x = request["input"]    
-        # perform calculations using both models
+        x = request["input"]
         a = self.text_model(x)
         b = self.vision_model(x)
         c = a + b
@@ -101,7 +101,7 @@ if __name__ == "__main__":
     # 12+ features like batching, streaming, etc...
     server = ls.LitServer(InferenceEngine(max_batch_size=1), accelerator="auto")
     server.run(port=8000)
-```
+
 
 Deploy for free to [Lightning cloud](#hosting-options) (or self host anywhere):
 
